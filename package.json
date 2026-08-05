@@ -1,0 +1,32 @@
+{
+  "name": "chess-ai-master",
+  "version": "2.0.0",
+  "description": "The most advanced chess analysis engine - IQ: 9,000,000",
+  "main": "popup/popup.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "echo \"Linting...\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MR-golem/chesscheat.git"
+  },
+  "author": "MR-golem <dontosintme69@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MR-golem/chesscheat/issues"
+  },
+  "homepage": "https://github.com/MR-golem/chesscheat#readme",
+  "dependencies": {
+    "stockfish.wasm": "^0.10.0"
+  },
+  "keywords": [
+    "chess",
+    "analysis",
+    "stockfish",
+    "engine",
+    "chess.com",
+    "ai",
+    "chess-engine"
+  ]
+}

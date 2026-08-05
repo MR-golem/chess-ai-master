@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chess AI Master</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 380px;
+      min-height: 500px;
+      background: linear-gradient(135deg, #0a0a1a, #1a1a3a);
+      font-family: 'Inter', system-ui, sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .header {
+      padding: 24px;
+      background: linear-gradient(135deg, rgba(100, 100, 255, 0.2), rgba(50, 50, 200, 0.1));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 48px;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 0 20px rgba(100, 100, 255, 0.5));
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff, #a0a0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #ff6b6b;
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+
+    .version {
+      font-size: 11px;
+      color: #666;
+      margin-top: 8px;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .feature-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(100, 100, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .feature-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #ccc;
+    }
+
+    .status-section {
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid rgba(0, 255, 136, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .status-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #00ff88;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 10px #00ff88; }
+      50% { opacity: 0.6; box-shadow: 0 0 5px #00ff88; }
+    }
+
+    .status-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: #00ff88;
+    }
+
+    .status-details {
+      font-size: 12px;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    .shortcuts-section {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .shortcuts-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #888;
+      margin-bottom: 12px;
+    }
+
+    .shortcut-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .shortcut-item:last-child {
+      border-bottom: none;
+    }
+
+    .shortcut-desc {
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    kbd {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .footer {
+      padding: 16px 20px;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-text {
+      font-size: 11px;
+      color: #444;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 12px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: #aaa;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 12px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: #00ff88;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">&#9818;</div>
+    <div class="title">Chess AI Master</div>
+    <div class="subtitle">IQ: 9,000,000</div>
+    <div class="version">v2.0 - Ultimate Edition</div>
+  </div>
+
+  <div class="content">
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">&#129504;</div>
+        <div class="feature-name">Stockfish Engine</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#127919;</div>
+        <div class="feature-name">Visual Arrows</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#128200;</div>
+        <div class="feature-name">Eval Bar</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#128214;</div>
+        <div class="feature-name">Opening Book</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#9888;</div>
+        <div class="feature-name">Threat Detection</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#128203;</div>
+        <div class="feature-name">Multi-Line</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#9881;</div>
+        <div class="feature-name">Customizable</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#128260;</div>
+        <div class="feature-name">Auto Analyze</div>
+      </div>
+    </div>
+
+    <div class="status-section">
+      <div class="status-header">
+        <div class="status-dot"></div>
+        <div class="status-text">Engine Ready</div>
+      </div>
+      <div class="status-details">
+        Stockfish WASM engine loaded successfully.<br>
+        Open any Chess.com game to start analyzing.
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="stat-value" id="games-played">0</div>
+            <div class="stat-label">Games</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="analyses-done">0</div>
+            <div class="stat-label">Analyses</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="accuracy">0%</div>
+            <div class="stat-label">Accuracy</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-primary" id="open-settings">Open Settings</button>
+    <button class="btn-secondary" id="export-data">Export Analysis Data</button>
+
+    <div class="shortcuts-section">
+      <div class="shortcuts-title">Keyboard Shortcuts</div>
+      <div class="shortcut-item">
+        <span class="shortcut-desc">Toggle Panel</span>
+        <span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd></span>
+      </div>
+      <div class="shortcut-item">
+        <span class="shortcut-desc">Start/Stop</span>
+        <span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd></span>
+      </div>
+      <div class="shortcut-item">
+        <span class="shortcut-desc">Toggle Arrows</span>
+        <span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd></span>
+      </div>
+      <div class="shortcut-item">
+        <span class="shortcut-desc">Toggle Eval Bar</span>
+        <span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-text">Chess AI Master v2.0 - The Ultimate Chess Analysis Engine<br>Developed by MR-golem</div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
