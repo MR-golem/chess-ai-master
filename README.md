@@ -7,8 +7,8 @@ Chess AI Master is a browser extension for [Chess.com](https://www.chess.com) th
 ---
 
 ## ✨ Features
-
-| | |
+ 
+| | |   
 |---|---|
 | 🧠 **Stockfish Engine** | Runs in a Web Worker — no server required |
 | 🎯 **Best-Move Arrows** | Multi-line arrows drawn directly on the board |
