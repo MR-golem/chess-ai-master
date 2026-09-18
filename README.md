@@ -108,3 +108,5 @@ Use this tool responsibly. Only use it in unrated games, puzzles, or your own an
 ## 📄 License
 
 ISC © MR-golem
+
+A
